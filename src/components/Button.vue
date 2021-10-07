@@ -1,6 +1,21 @@
 <template>
   <div>
-    <button class="btn" @click="onClick">{{ text }}</button>
+    <!--    1:-->
+    <!--    <button class="btn" @click="onClick">-->
+    <!--    2: add js-->
+    <!--    <button :class="text.length > 5 ? 'btn' : ''" @click="onClick">-->
+    <!--    3: for few styles -->
+    <!--    <button-->
+    <!--      :class="{-->
+    <!--        btn: text.length > 5,-->
+    <!--        green: true-->
+    <!--      }"-->
+    <!--      @click="onClick"-->
+    <!--    >   -->
+    <!--    4: the best-->
+    <button :class="[text.length > 5 && 'btn', 'green']" @click="onClick">
+      {{ text }}
+    </button>
   </div>
 </template>
 
@@ -24,7 +39,6 @@ export default {
 
 <style scoped>
 .btn {
-  background: #42b983;
   border: 2px solid #2c3e50;
   text-transform: uppercase;
   font-weight: bold;
@@ -37,5 +51,9 @@ export default {
 
 .btn:hover {
   transform: scale(1.03, 1.03);
+}
+
+.green {
+  background: #42b983;
 }
 </style>

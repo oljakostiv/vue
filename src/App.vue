@@ -4,78 +4,84 @@
     <h1>Hello everyone from {{ name }}!</h1>
     <button class="btn" @click="changeName">Change name</button>
 
-    <div>
-      <button class="btn" @click="isVisible = !isVisible">Toggle</button>
-      <Button v-if="isVisible" text="Awesome" @button-click="changeName" />
-    </div>
+    <h2>{{ inpValue }} {{ checkbox }} {{ select }} {{ radio }}</h2>
+    <!--    <input type="text" :value="inpValue" @input="inputChange" />-->
+    <input type="text" v-model.trim="inpValue" />
+    <input type="checkbox" v-model="checkbox" />
+    <select id="select" v-model="select">
+      <option value="one">1</option>
+      <option value="two">2</option>
+      <option value="three">3</option>
+    </select>
+    <input type="radio" name="1" value="one" v-model="radio" />
+    <input type="radio" name="1" value="two" v-model="radio" />
+    <input type="radio" name="1" value="three" v-model="radio" />
+    <hr />
 
-    <button class="btn" @click="counter += 1">Counter inc</button>
-    <button class="btn" @click="counter -= 1">Counter dec</button>
-    <div v-if="counter === 0">It's zero!</div>
-    <div v-else-if="counter === 1">It's one!</div>
-    <div v-else-if="counter === 2">It's two!</div>
-    <div v-else-if="counter < 0">It's bad value!</div>
-    <div v-else>It's a lot!</div>
-    <div class="counter">
-      <h2>{{ counter }}</h2>
+    <form @submit.prevent="setTodo">
+      <input type="text" name="title" v-model.trim="title" />
+      <br />
+      <input type="text" name="body" v-model.trim="body" />
+      <br />
+      <button type="submit">ADD TODO</button>
+    </form>
+    <div v-for="{ title, body, id, createdAt, completed } of todos" :key="id">
+      <h3>{{ title }}</h3>
+      <p>{{ body }}</p>
+      <span>Created at: {{ new Date(createdAt) }}</span>
+      <br />
+      <span>Completed: {{ completed }}</span>
+      <hr />
     </div>
-    <br />
-    <img :src="img" :alt="`Alt is ${alt}`" />
-
-    <!--    <h2 v-for="{ name, email, id } of users" :key="id">-->
-    <!--      {{ name }} - {{ email }}-->
-    <!--    </h2>-->
-    <!--    if new file:-->
-    <div v-if="!usersLoading">
-      <User class="user" v-for="user of users" :key="user.id" :user="user" />
-    </div>
-    <h2 v-else>LOADING...</h2>
   </div>
 </template>
 
 <script>
-import Button from "@/components/Button";
-import User from "@/components/User";
 export default {
   name: "App",
-  components: { User, Button },
+  components: {},
   data() {
     return {
-      usersLoading: false,
-      counter: 0,
-      isVisible: true,
       name: "Olha",
-      img: "https://memegenerator.net/img/instances/65894975.jpg",
-      alt: "meme",
-      users: []
+      inpValue: "",
+      checkbox: false,
+      select: null,
+      radio: null,
+      todos: [],
+      title: "",
+      body: ""
     };
   },
-  beforeUpdate() {
-    console.log("click", this.counter);
+  watch: {
+    inpValue() {
+      console.log("watch", this.inpValue);
+    },
+    todos: {
+      deep: true,
+      handler() {
+        localStorage.setItem("todos", JSON.stringify(this.todos));
+      }
+    }
   },
   methods: {
     changeName() {
       this.name = Math.floor(Math.random() * 1000);
     },
-    click() {
-      this.counter++;
-    },
-    setUsers(users) {
-      this.users = users;
-    },
-    async fetchUsers() {
-      this.usersLoading = true;
-      const payload = await fetch("https://jsonplaceholder.typicode.com/users");
-      const users = await payload.json();
+    setTodo() {
+      const newTodo = {
+        title: this.title,
+        body: this.body,
+        id: Date.now() + Math.random(),
+        createdAt: new Date(),
+        completed: true
+      };
 
-      this.usersLoading = false;
+      this.todos.push(newTodo);
+      localStorage.setItem("todos", JSON.stringify(this.todos));
 
-      return users;
+      this.title = "";
+      this.body = "";
     }
-  },
-  async created() {
-    const users = await this.fetchUsers();
-    this.setUsers(users);
   }
 };
 </script>
@@ -102,20 +108,5 @@ export default {
 
 .btn:active {
   background: #2c3e50;
-}
-
-.counter {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-.counter h2 {
-  background: #2c3e50;
-  color: #fff;
-  border: 1px solid currentColor;
-  border-radius: 30px;
-
-  padding: 10px 15px;
-  margin: 10px;
 }
 </style>

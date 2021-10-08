@@ -26,7 +26,10 @@
     <!--      {{ name }} - {{ email }}-->
     <!--    </h2>-->
     <!--    if new file:-->
-    <User v-for="user of users" :key="user.id" :user="user" />
+    <div v-if="!usersLoading">
+      <User class="user" v-for="user of users" :key="user.id" :user="user" />
+    </div>
+    <h2 v-else>LOADING...</h2>
   </div>
 </template>
 
@@ -38,21 +41,41 @@ export default {
   components: { User, Button },
   data() {
     return {
+      usersLoading: false,
       counter: 0,
       isVisible: true,
       name: "Olha",
       img: "https://memegenerator.net/img/instances/65894975.jpg",
       alt: "meme",
-      users: [
-        { name: "Tim Lips", email: "example@gmail.com" },
-        { name: "Michael Jung", email: "example2@gmail.com" }
-      ]
+      users: []
     };
+  },
+  beforeUpdate() {
+    console.log("click", this.counter);
   },
   methods: {
     changeName() {
       this.name = Math.floor(Math.random() * 1000);
+    },
+    click() {
+      this.counter++;
+    },
+    setUsers(users) {
+      this.users = users;
+    },
+    async fetchUsers() {
+      this.usersLoading = true;
+      const payload = await fetch("https://jsonplaceholder.typicode.com/users");
+      const users = await payload.json();
+
+      this.usersLoading = false;
+
+      return users;
     }
+  },
+  async created() {
+    const users = await this.fetchUsers();
+    this.setUsers(users);
   }
 };
 </script>

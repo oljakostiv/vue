@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{ buildInfo }}</h3>
+    <h3 class="info">{{ buildInfo }}</h3>
   </div>
 </template>
 
@@ -21,4 +21,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.info {
+  font-weight: inherit;
+}
+</style>

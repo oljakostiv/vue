@@ -25,12 +25,22 @@
       <br />
       <button type="submit">ADD TODO</button>
     </form>
-    <div v-for="{ title, body, id, createdAt, completed } of todos" :key="id">
+    <div
+      v-for="({ title, body, id, createdAt, completed }, index) of todos"
+      :key="id"
+      :style="{ textDecoration: completed ? 'none' : 'line-through' }"
+    >
+      <h4>{{ index + 1 }}</h4>
       <h3>{{ title }}</h3>
       <p>{{ body }}</p>
       <span>Created at: {{ new Date(createdAt) }}</span>
       <br />
-      <span>Completed: {{ completed }}</span>
+      <span>{{ completed }}</span>
+      <br />
+      <button @click="deleteTodo(id, index)">Delete</button>
+      <button @click="markAsCompleted(id)">
+        Mark as {{ completed ? "completed" : "in-progress" }}
+      </button>
       <hr />
     </div>
   </div>
@@ -59,6 +69,7 @@ export default {
     todos: {
       deep: true,
       handler() {
+        console.log(JSON.stringify(this.todos));
         localStorage.setItem("todos", JSON.stringify(this.todos));
       }
     }
@@ -81,6 +92,16 @@ export default {
 
       this.title = "";
       this.body = "";
+    },
+    deleteTodo(todoId) {
+      this.todos = this.todos.filter(el => el.id !== todoId);
+      //      by index:
+      // this.todos.splice(index, 1)
+    },
+    markAsCompleted(todoId) {
+      const toggleTodo = this.todos.find(el => (el.id = todoId));
+
+      toggleTodo.completed = !toggleTodo.completed;
     }
   }
 };
@@ -88,6 +109,7 @@ export default {
 
 <style scoped>
 @import "assets/index.css";
+
 .btn {
   background: #fff;
   border: 2px solid currentColor;

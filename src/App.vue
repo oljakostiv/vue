@@ -99,7 +99,7 @@ export default {
       // this.todos.splice(index, 1)
     },
     markAsCompleted(todoId) {
-      const toggleTodo = this.todos.find(el => (el.id = todoId));
+      const toggleTodo = this.todos.find(el => el.id === todoId);
 
       toggleTodo.completed = !toggleTodo.completed;
     }

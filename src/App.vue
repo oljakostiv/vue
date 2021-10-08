@@ -68,6 +68,7 @@ export default {
       const payload = await fetch("https://jsonplaceholder.typicode.com/users");
       const users = await payload.json();
 
+      await new Promise(res => setTimeout(res, 4000));
       this.usersLoading = false;
 
       return users;

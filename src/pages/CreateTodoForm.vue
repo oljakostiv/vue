@@ -1,0 +1,50 @@
+<template>
+  <div>
+    <h3>Let into:</h3>
+    <form @submit.prevent="setTodo">
+      <input
+        class="inputCreate"
+        type="text"
+        name="title"
+        placeholder="some title.."
+        v-model.trim="title"
+      />
+      <br />
+      <input
+        class="inputCreate"
+        type="text"
+        name="body"
+        placeholder="some body.."
+        v-model.trim="body"
+      />
+      <br />
+      <button class="btn" type="submit">ADD TODO</button>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "CreateTodoForm",
+  data() {
+    return {
+      title: "",
+      body: ""
+    };
+  },
+  emits: ["create-todo"],
+  methods: {
+    onSubmitSuccess() {
+      this.title = "";
+      this.body = "";
+    },
+    setTodo() {
+      this.$emit("create-todo", this.title, this.body, this.onSubmitSuccess);
+    }
+  }
+};
+</script>
+
+<style scoped>
+@import "../assets/index.css";
+</style>

@@ -32,11 +32,6 @@ export default {
       radio: null
     };
   },
-  watch: {
-    inpValue() {
-      console.log("watch", this.inpValue);
-    }
-  },
   methods: {
     changeName() {
       this.name = Math.floor(Math.random() * 1000);

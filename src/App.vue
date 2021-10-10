@@ -8,57 +8,19 @@
     <router-link active-class="active" to="/create/about">About</router-link>
   </nav>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <h1>{{ $store.state.count }}</h1>
-  <button @click="$store.dispatch('inc')">inc</button>
-  <router-view
-    :todos="todos"
-    @delete-todo="deleteTodo"
-    @toggle-completed="toggleCompleted"
-    @create-todo="setTodo"
-  ></router-view>
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
   name: "App",
   components: {},
-  data() {
-    return {
-      todos: JSON.parse(localStorage.getItem("todos")) ?? []
-    };
-  },
-  methods: {
-    setTodo(title, body, onSubmitSuccess) {
-      const newTodo = {
-        title,
-        body,
-        id: Date.now() + Math.random(),
-        createdAt: new Date(),
-        completed: true
-      };
-
-      this.todos.push(newTodo);
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-
-      onSubmitSuccess();
-    },
-    deleteTodo(todoId) {
-      this.todos = this.todos.filter(el => el.id !== todoId);
-      //      by index:
-      // this.todos.splice(index, 1)
-    },
-    toggleCompleted(todoId) {
-      const toggleTodo = this.todos.find(el => el.id === todoId);
-
-      toggleTodo.completed = !toggleTodo.completed;
-    }
-  },
+  methods: {},
   watch: {
-    todos: {
+    "$store.state.todos": {
       deep: true,
       handler() {
-        console.log(JSON.stringify(this.todos));
-        localStorage.setItem("todos", JSON.stringify(this.todos));
+        localStorage.setItem("todos", JSON.stringify(this.$store.state.todos));
       }
     },
     $route: {

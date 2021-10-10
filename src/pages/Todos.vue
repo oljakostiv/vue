@@ -23,19 +23,17 @@
 <script>
 export default {
   name: "Todos",
-  props: {
-    todos: {
-      type: Array,
-      required: true
-    }
-  },
-  emits: ["delete-todo", "toggle-completed"],
   methods: {
     deleteTodo(id) {
-      this.$emit("delete-todo", id);
+      this.$store.dispatch("deleteTodo", id);
     },
     toggleCompleted(id) {
-      this.$emit("toggle-completed", id);
+      this.$store.dispatch("toggleCompleted", id);
+    }
+  },
+  computed: {
+    todos() {
+      return this.$store.state.todos;
     }
   }
 };

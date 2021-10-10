@@ -35,7 +35,6 @@ export default {
       body: ""
     };
   },
-  emits: ["create-todo"],
   methods: {
     onSubmitSuccess() {
       this.title = "";
@@ -44,7 +43,11 @@ export default {
       this.$router.push("/todos");
     },
     setTodo() {
-      this.$emit("create-todo", this.title, this.body, this.onSubmitSuccess);
+      this.$store.dispatch("setTodo", {
+        title: this.title,
+        body: this.body
+      });
+      this.onSubmitSuccess();
     }
   }
 };

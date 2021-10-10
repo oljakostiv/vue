@@ -1,10 +1,15 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link>
-    <router-link to="/todos">Todos</router-link>
-    <router-link to="/create">Create Todo</router-link>
+    <router-link active-class="active" to="/">Home</router-link>
+    <router-link active-class="active" to="/todos">Todos</router-link>
+    <router-link exact-active-class="active" to="/create"
+      >Create Todo</router-link
+    >
+    <router-link active-class="active" to="/create/about">About</router-link>
   </nav>
   <img alt="Vue logo" src="./assets/logo.png" />
+  <h1>{{ $store.state.count }}</h1>
+  <button @click="$store.dispatch('inc')">inc</button>
   <router-view
     :todos="todos"
     @delete-todo="deleteTodo"
@@ -21,15 +26,6 @@ export default {
     return {
       todos: JSON.parse(localStorage.getItem("todos")) ?? []
     };
-  },
-  watch: {
-    todos: {
-      deep: true,
-      handler() {
-        console.log(JSON.stringify(this.todos));
-        localStorage.setItem("todos", JSON.stringify(this.todos));
-      }
-    }
   },
   methods: {
     setTodo(title, body, onSubmitSuccess) {
@@ -56,6 +52,22 @@ export default {
 
       toggleTodo.completed = !toggleTodo.completed;
     }
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler() {
+        console.log(JSON.stringify(this.todos));
+        localStorage.setItem("todos", JSON.stringify(this.todos));
+      }
+    },
+    $route: {
+      deep: true,
+      handler(to, from) {
+        console.log("To:", to.path);
+        console.log("From:", from.path);
+      }
+    }
   }
 };
 </script>
@@ -78,7 +90,7 @@ nav a {
   margin-right: 20px;
 }
 
-nav > a.router-link-active {
+.active {
   color: #42b983;
 }
 </style>

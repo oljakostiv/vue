@@ -18,7 +18,6 @@
       <option value="three">3</option>
     </select>
   </div>
-  <router-view></router-view>
 </template>
 
 <script>

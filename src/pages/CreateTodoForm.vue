@@ -8,6 +8,7 @@
         name="title"
         placeholder="some title.."
         v-model.trim="title"
+        required
       />
       <br />
       <input
@@ -16,10 +17,12 @@
         name="body"
         placeholder="some body.."
         v-model.trim="body"
+        required
       />
       <br />
       <button class="btn" type="submit">ADD TODO</button>
     </form>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -37,6 +40,8 @@ export default {
     onSubmitSuccess() {
       this.title = "";
       this.body = "";
+
+      this.$router.push("/todos");
     },
     setTodo() {
       this.$emit("create-todo", this.title, this.body, this.onSubmitSuccess);

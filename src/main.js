@@ -1,36 +1,33 @@
 import { createApp } from "vue";
-import * as VueRouter from "vue-router";
+import { createStore } from "vuex";
 
 import App from "./App.vue";
-import Home from "@/pages/Home";
-// import NotFound from "@/pages/NotFound";
-import Todos from "@/pages/Todos";
-import CreateTodoForm from "@/pages/CreateTodoForm";
-import HelloWorld from "@/components/HelloWorld";
+import { router } from "@/routes";
 
-const routes = [
-  {
-    path: "/",
-    component: Home,
-    children: [
-      {
-        path: "/hello",
-        component: HelloWorld
-      }
-    ]
+const store = createStore({
+  state() {
+    return {
+      count: 0
+    };
   },
-  { path: "/todos", component: Todos, props: true },
-  { path: "/create", component: CreateTodoForm, props: true }
-  // { path: "/*", component: NotFound }
-];
-
-const router = VueRouter.createRouter({
-  history: VueRouter.createWebHistory(),
-  routes
+  mutations: {
+    increment(state, arg) {
+      console.log(state, arg);
+      state.count++;
+    }
+    //  job: update(change) state
+  },
+  actions: {
+    inc(context, args) {
+      console.log(context, args);
+      //  for mutations:
+      context.commit("increment", args);
+    }
+    //  job: receiving input data, calling mutations
+  }
 });
 
-const app = createApp(App);
-
-app.use(router);
-
-app.mount("#app");
+createApp(App)
+  .use(store)
+  .use(router)
+  .mount("#app");

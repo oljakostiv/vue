@@ -42,3 +42,22 @@ body {
 
     margin: 5px;
 }
+
+nav {
+    display: flex;
+    background: #2c3e50;
+    font-weight: initial;
+
+    padding: 10px 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+
+    margin-right: 20px;
+}
+
+.active {
+    color: #42b983;
+}

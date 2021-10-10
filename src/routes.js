@@ -1,9 +1,10 @@
-import Home from "@/pages/Home";
-import Todos from "@/pages/Todos";
-import CreateTodoForm from "@/pages/CreateTodoForm";
-import HelloWorld from "@/components/HelloWorld";
-import NotFound from "@/pages/NotFound";
 import * as VueRouter from "vue-router";
+
+import HelloWorld from "@/components/HelloWorld";
+import CreateTodoForm from "@/pages/CreateTodoForm";
+import Home from "@/pages/Home";
+import NotFound from "@/pages/NotFound";
+import Todos from "@/pages/Todos";
 
 export const routes = [
   { path: "/", component: Home },

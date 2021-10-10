@@ -17,17 +17,17 @@ export default {
   components: {},
   methods: {},
   watch: {
-    "$store.state.todos": {
-      deep: true,
-      handler() {
-        localStorage.setItem("todos", JSON.stringify(this.$store.state.todos));
-      }
-    },
     $route: {
       deep: true,
       handler(to, from) {
         console.log("To:", to.path);
         console.log("From:", from.path);
+      }
+    },
+    "$store.state.todos": {
+      deep: true,
+      handler() {
+        localStorage.setItem("todos", JSON.stringify(this.$store.state.todos));
       }
     }
   }
@@ -36,23 +36,4 @@ export default {
 
 <style scoped>
 @import "assets/index.css";
-
-nav {
-  display: flex;
-  background: #2c3e50;
-  font-weight: initial;
-
-  padding: 10px 20px;
-}
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-
-  margin-right: 20px;
-}
-
-.active {
-  color: #42b983;
-}
 </style>

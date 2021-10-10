@@ -25,7 +25,6 @@ export default {
   name: "Home",
   data() {
     return {
-      name: "Olha",
       inpValue: "",
       checkbox: false,
       select: null,
@@ -34,7 +33,12 @@ export default {
   },
   methods: {
     changeName() {
-      this.name = Math.floor(Math.random() * 1000);
+      this.$store.dispatch("changeName");
+    }
+  },
+  computed: {
+    name() {
+      return this.$store.state.name;
     }
   }
 };

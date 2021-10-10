@@ -3,15 +3,19 @@ import { createStore } from "vuex";
 export const store = createStore({
   state() {
     return {
+      name: "Olha",
       todos: JSON.parse(localStorage.getItem("todos")) ?? []
     };
   },
   mutations: {
-    setTodo(state, newTodo) {
-      state.todos.push(newTodo);
+    changeName(state) {
+      state.name = Math.floor(Math.random() * 1000);
     },
     deleteTodo(state, todoDeleteId) {
       state.todos = state.todos.filter(el => el.id !== todoDeleteId);
+    },
+    setTodo(state, newTodo) {
+      state.todos.push(newTodo);
     },
     toggleCompleted(state, todoToggleId) {
       const toggleTodo = state.todos.find(el => el.id === todoToggleId);
@@ -21,6 +25,12 @@ export const store = createStore({
     //  job: update(change) state
   },
   actions: {
+    changeName(context, payload) {
+      context.commit("changeName", payload);
+    },
+    deleteTodo(context, payload) {
+      context.commit("deleteTodo", payload);
+    },
     setTodo(context, payload) {
       const { title, body } = payload;
       const newTodo = {
@@ -32,9 +42,6 @@ export const store = createStore({
       };
       //  for mutations:
       context.commit("setTodo", newTodo);
-    },
-    deleteTodo(context, payload) {
-      context.commit("deleteTodo", payload);
     },
     toggleCompleted(context, payload) {
       context.commit("toggleCompleted", payload);

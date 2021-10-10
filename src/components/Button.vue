@@ -1,18 +1,6 @@
+<!--not used-->
 <template>
   <div>
-    <!--    1:-->
-    <!--    <button class="btn" @click="onClick">-->
-    <!--    2: add js-->
-    <!--    <button :class="text.length > 5 ? 'btn' : ''" @click="onClick">-->
-    <!--    3: for few styles -->
-    <!--    <button-->
-    <!--      :class="{-->
-    <!--        btn: text.length > 5,-->
-    <!--        green: true-->
-    <!--      }"-->
-    <!--      @click="onClick"-->
-    <!--    >   -->
-    <!--    4: the best-->
     <button :class="[text.length > 5 && 'btn', 'green']" @click="onClick">
       {{ text }}
     </button>

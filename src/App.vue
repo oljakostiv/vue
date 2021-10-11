@@ -6,8 +6,10 @@
       >Create Todo</router-link
     >
     <router-link active-class="active" to="/create/about">About</router-link>
+    <router-link active-class="active" to="/posts">Posts</router-link>
   </nav>
   <img alt="Vue logo" src="./assets/logo.png" />
+
   <router-view></router-view>
 </template>
 

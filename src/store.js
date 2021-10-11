@@ -4,7 +4,8 @@ export const store = createStore({
   state() {
     return {
       name: "Olha",
-      todos: JSON.parse(localStorage.getItem("todos")) ?? []
+      todos: JSON.parse(localStorage.getItem("todos")) ?? [],
+      posts: []
     };
   },
   mutations: {
@@ -16,6 +17,9 @@ export const store = createStore({
     },
     setTodo(state, newTodo) {
       state.todos.push(newTodo);
+    },
+    setPosts(state, posts) {
+      state.posts = posts;
     },
     toggleCompleted(state, todoToggleId) {
       const toggleTodo = state.todos.find(el => el.id === todoToggleId);
@@ -30,6 +34,14 @@ export const store = createStore({
     },
     deleteTodo(context, payload) {
       context.commit("deleteTodo", payload);
+    },
+    async getPosts(context) {
+      const payload = await fetch("https://jsonplaceholder.typicode.com/posts");
+      const posts = await payload.json();
+
+      await new Promise(res => setTimeout(res, 3000));
+
+      context.commit("setPosts", posts);
     },
     setTodo(context, payload) {
       const { title, body } = payload;

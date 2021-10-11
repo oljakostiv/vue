@@ -5,6 +5,7 @@ import CreateTodoForm from "@/pages/CreateTodoForm";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import Todos from "@/pages/Todos";
+import Posts from "@/pages/Posts";
 
 export const routes = [
   { path: "/", component: Home },
@@ -20,6 +21,7 @@ export const routes = [
       }
     ]
   },
+  { path: "/posts", component: Posts, props: true },
   { path: "/:catchAll(.*)", component: NotFound }
 ];
 

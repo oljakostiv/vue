@@ -4,13 +4,29 @@ export const store = createStore({
   state() {
     return {
       name: "Olha",
+      names: [
+        "Bogdan",
+        "Nikolay",
+        "Stepan",
+        "Sergiy",
+        "Igor",
+        "Vladislav",
+        "Miroslav",
+        "Nikita",
+        "Taras",
+        "Maria",
+        "Victoria",
+        "Iryna",
+        "Dasha",
+        "Natalia"
+      ],
       todos: JSON.parse(localStorage.getItem("todos")) ?? [],
       posts: []
     };
   },
   mutations: {
     changeName(state) {
-      state.name = Math.floor(Math.random() * 1000);
+      state.name = state.names[Math.floor(Math.random() * state.names.length)];
     },
     deleteTodo(state, todoDeleteId) {
       state.todos = state.todos.filter(el => el.id !== todoDeleteId);

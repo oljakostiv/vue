@@ -1,7 +1,9 @@
 <template>
   <h3>POSTS:</h3>
-  <h2 v-if="isPostsLoading">Loading..</h2>
-  <Post v-for="post of posts" :key="post.id" :post="post" />
+  <div v-if="!isPostsLoading">
+    <Post v-for="post of posts" :key="post.id" :post="post" />
+  </div>
+  <h2 v-else>Loading..</h2>
 </template>
 
 <script>
@@ -21,7 +23,7 @@ export default {
   },
   computed: {
     posts() {
-      return this.$store.state.posts;
+      return this.$store.getters.sortedPosts;
     }
   }
 };

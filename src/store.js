@@ -59,5 +59,14 @@ export const store = createStore({
       context.commit("toggleCompleted", payload);
     }
     //  job: receiving input data, calling mutations
+  },
+  getters: {
+    sortedPosts(state) {
+      const postCopy = [...state.posts];
+      postCopy.sort((a, b) => {
+        return b.title.length < a.title.length ? -1 : 1;
+      });
+      return postCopy;
+    }
   }
 });
